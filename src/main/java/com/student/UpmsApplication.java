@@ -31,7 +31,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @ClassName: Application 
  * @Description: 启动入口
  * @author: LeiYongQiang
- * @date: 2024年3月13日 16:36:58
+ * @date: 2024年3月14日 11:36:58
  */                                                                 
 @SpringBootApplication
 @ImportResource(locations = { "classpath:configs/druid-bean.xml","classpath:configs/spring-core.xml" })
@@ -55,7 +55,6 @@ public class UpmsApplication {
 		System.out.println("------------------------------------- Upms启动成功 ----------------------------------------");
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
 	public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
 		ServletRegistrationBean reg = new ServletRegistrationBean(dispatcherServlet);
