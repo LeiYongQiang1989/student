@@ -10,6 +10,7 @@
  */
 package com.student;
 
+import cn.hutool.core.util.StrUtil;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.mybatis.spring.annotation.MapperScan;
@@ -38,12 +39,12 @@ import org.springframework.web.servlet.DispatcherServlet;
 @MapperScan(basePackages = { "com.ylkj.cloud.**.mapper" })
 @EnableAsync
 //@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*30)
-public class UpmsApplication {
+public class Application {
 	@Autowired
 	private Environment environment;
 
 	public static void main(String[] args) {
-		SpringApplication.run(UpmsApplication.class, args);
+		SpringApplication.run(Application.class, args);
 		System.out.println("    ____                                                _____   _                    _\n"+
 				"  /_____|                                              / ____| | |                  | |\n" +
 				" | (___   _ __   _ __  _  _ __    __ _  ______  ______ | |     | |  ___   _   _   __| |\n" +
@@ -52,7 +53,7 @@ public class UpmsApplication {
 				" |_____/ | .__/ |_|   |_||_| |_| \\__, |                 \\_____||_| \\___/  \\__,_| \\__,_|\n" +
 				"         | |                      __/ |                                                \n" +
 				"         |_|                     |___/    ");
-		System.out.println("------------------------------------- Upms启动成功 ----------------------------------------");
+		System.out.println("-------------------------------------学生成绩管理启动成功 ----------------------------------------");
 	}
 
 	@Bean
@@ -61,7 +62,7 @@ public class UpmsApplication {
 		reg.getUrlMappings().clear();
 		reg.addUrlMappings("/api/*");
 		String appname = environment.getProperty("spring.application.name");
-//		reg.addUrlMappings(StrUtil.format("/{}/api/*", appname));
+		reg.addUrlMappings(StrUtil.format("/{}/api/*", appname));
 		reg.addUrlMappings("/*");
 		return reg;
 	}

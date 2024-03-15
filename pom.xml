@@ -60,6 +60,12 @@
             <version>1.2.46</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.6.5</version>
+        </dependency>
+
         <!-- commons -->
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -1,0 +1,57 @@
+#服务端口
+server:
+  port: 28068
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+spring:
+  application:
+    name: student-performance
+  profiles:
+    active: dev
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /**
+    async:
+      #设置超时时间为20000ms
+      request-timeout: 20000
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+    add-mappings: false
+  sleuth:
+    sampler:
+
+
+
+# mybatis-plus Settings
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.ylkj.cloud.**.model,com.sgcc.cloud.**.model
+
+
+
+
+#自定义密码加解密算法
+jasypt:
+  encryptor:
+    password: 12HDESAAHIHQWERT
+    bean: customStringEncryptor
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: "upms权限管理"
+    version: "1.0.0"
+
+#ws:
+#  connect-timeout: 10000
+#  request-timeout: 5000
+#  socket-timeout: 30000
+#  socket-ip: 27.196.146.151
+
