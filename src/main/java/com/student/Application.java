@@ -35,8 +35,8 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @date: 2024年3月14日 11:36:58
  */                                                                 
 @SpringBootApplication
-@ImportResource(locations = { "classpath:configs/druid-bean.xml","classpath:configs/spring-core.xml" })
-@MapperScan(basePackages = { "com.ylkj.cloud.**.mapper" })
+//@ImportResource(locations = { "classpath:configs/druid-bean.xml","classpath:configs/spring-core.xml" })
+@MapperScan(basePackages = { "com.student.**.mapper" })
 @EnableAsync
 //@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*30)
 public class Application {
