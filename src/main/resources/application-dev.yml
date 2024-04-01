@@ -7,23 +7,13 @@ spring:
     url: jdbc:mysql://49.232.171.238:3306/my_project?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: Leiyongqiang@8909
-#      filters: stat,wall,log4j,config
-#      max-active: 100
-#      initial-size: 1
-#      max-wait: 60000
-#      min-idle: 1
-#      time-between-eviction-runs-millis: 60000
-#      min-evictable-idle-time-millis: 300000
-#      validation-query: select 'x' FROM DUAL
-#      test-while-idle: true
-#      test-on-borrow: false
-#      test-on-return: false
-#      pool-prepared-statements: true
-#      max-open-prepared-statements: 50
-#      max-pool-prepared-statement-per-connection-size: 20
-#      remove-abandoned: true
-#      remove-abandoned-timeout: 500
-#      log-abandoned: true
+    druid:
+      min-idle: 3
+      max-active: 15
+      initial-size: 5
+      min-evictable-idle-time-millis: 30000
+      max-evictable-idle-time-millis: 60000
+
   #redis Settings
   redis:
     #数据库索引
@@ -44,11 +34,11 @@ spring:
     #连接超时时间
     timeout: 10000
 
-
-# logback 日志文件路径
-logging:
-  file:
-    path: /yxyx/app/logs/upms
+#
+## logback 日志文件路径
+#logging:
+#  file:
+#    path: /yxyx/app/logs/upms
 
 
 request:
@@ -56,5 +46,14 @@ request:
   content-type: application/json;charset=UTF-8
   accept: "*/*"
 
+SMS2:
+  PRK: 21d22fcf259f5cde
+  pubKey: 0470d7ab4f66602f1b1
+SMS4:
+  LOGIN: f8d4fad5
+authority:
+  whiteIpList: 127.0.0.0.1,
+  loginUserToken: prod_login_
+  salt:
 
 

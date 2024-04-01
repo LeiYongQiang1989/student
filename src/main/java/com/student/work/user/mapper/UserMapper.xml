@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.work.user.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.student.work.user.model.UserDO">
+        <result column="id" property="id" />
+        <result column="user_no" property="userNo" />
+        <result column="real_name" property="realName" />
+        <result column="pass_word" property="passWord" />
+        <result column="sex" property="sex" />
+        <result column="phone" property="phone" />
+        <result column="status" property="status" />
+        <result column="del_flag" property="delFlag" />
+		<result column="role_code" property="roleCode" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.student.work.user.model.UserDO">
+		select
+    		*
+    	from
+		 tb_user
+    	<where>
+  			<if test="param.userNo != null and param.userNo != ''">AND user_no LIKE CONCAT('%',#{param.userNo},'%')</if>
+  			<if test="param.realName != null and param.realName != ''">AND real_name LIKE CONCAT('%',#{param.realName},'%')</if>
+			<if test="param.phone != null and param.phone != ''">AND phone LIKE CONCAT('%',#{param.phone},'%')</if>
+  			<if test="param.sex != null and param.sex != ''">AND sex =# {param.sex}</if>
+  			<if test="param.roleCode != null and param.roleCode != ''">AND role_code =# {param.roleCode}</if>
+			<if test="param.status != null and param.status != ''">AND status =# {param.status}</if>
+			<if test="param.delFlag != null and param.delFlag != ''">AND del_flag =# {param.delFlag}</if>
+		</where>
+		ORDER BY ID
+	</select>
+	
+
+	
+	<select id="selectOne" resultType="com.student.work.user.model.UserDO" parameterType="com.student.work.user.model.UserDO">
+		SELECT * FROM tb_user
+		<where>
+			<if test="param.id != null ">AND id =# {param.id}</if>
+			<if test="param.userNo != null and param.userNo != ''">AND user_no=# {param.userNo}</if>
+			<if test="param.passWord != null and param.passWord != ''">AND pass_word =# {param.passWord}</if>
+			<if test="param.realName != null and param.realName != ''">AND real_name =# {param.realName}</if>
+			<if test="param.phone != null and param.phone != ''">AND phone =# {param.phone}</if>
+			<if test="param.roleCode != null and param.roleCode != ''">AND role_code =# {param.roleCode}</if>
+			<if test="param.status != null and param.status != ''">AND status =# {param.status}</if>
+			<if test="param.delFlag != null and param.delFlag != ''">AND del_flag =# {param.delFlag}</if>
+		</where>
+	</select>
+
+	<update id="updateUser" parameterType="com.student.work.user.model.UserDO">
+		update tb_user
+		<set>
+			<trim suffixOverrides=",">
+				<if test="param.userNo != null ">user_no=#{param.userNo}, </if>
+				<if test="param.realName != null">real_name=#{param.realName}, </if>
+				<if test="param.phone != null">phone=#{param.phone}, </if>
+				<if test="param.passWord != null">pass_word=#{param.passWord}, </if>
+				<if test="param.roleCode != null">role_code=#{param.roleCode}, </if>
+				<if test="param.status != null">status=#{param.status}, </if>
+				<if test="param.delFlag != null">del_flag=#{param.delFlag}, </if>
+				<if test="param.sex != null">sex=#{param.sex}, </if>
+				<if test="param.updateTime != null">update_time=#{param.updateTime}, </if>
+			</trim>
+		</set>
+		where id=#{param.id}
+	</update>
+
+	<delete id="deleteUser" parameterType="long">
+		delete from tb_user where id=#{id}
+	</delete>
+
+</mapper>

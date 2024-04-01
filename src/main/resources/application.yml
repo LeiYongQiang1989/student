@@ -32,7 +32,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.ylkj.cloud.**.model,com.sgcc.cloud.**.model
+  type-aliases-package: com.student.**.model
 
 
 
