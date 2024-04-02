@@ -15,6 +15,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 /**
@@ -45,7 +46,7 @@ public class DepartmentDO {
 
 
 
-
+    private List<Integer> ids;
 
 
 

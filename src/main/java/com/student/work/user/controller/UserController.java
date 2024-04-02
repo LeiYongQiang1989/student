@@ -47,7 +47,7 @@ public class UserController extends CheckUserController {
 	private UserService userService;
 
 	/**
-	 * @Title: selectPage
+	 * @Title: getUserPage
 	 * @Description: 分页查询
 	 * @param userDto
 	 * @return
@@ -78,10 +78,13 @@ public class UserController extends CheckUserController {
 	 */
 	@PostMapping(value = "/deleteBatchIds")
 	public Result deleteBatchIds(@RequestBody UserDTO userDto) {
-		if (userDto.getIds().size() < 0) {
+		if (userDto.getIds().size() < 1) {
 			return ResultGenerator.genFailedResult("id不能为空！");
 		}
 		int i = userService.deleteBatchIds(userDto.getIds());
+		if (i < 0) {
+			return ResultGenerator.genFailedResult("删除失败");
+		}
 		return ResultGenerator.genOkResult(i);
 	}
 	/**
@@ -103,7 +106,7 @@ public class UserController extends CheckUserController {
 	 * @return
 	 */
 	@PostMapping("/updateById")
-	public Result update(@RequestBody @Validated UserDO userDo) {
+	public Result update(@RequestBody  UserDO userDo) {
 		if (userDo.getId() == null) {
 			return ResultGenerator.genFailedResult("主键id不能为空！");
 		}

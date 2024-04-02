@@ -13,7 +13,6 @@ package com.student.work.Class.model;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
 import javax.validation.constraints.NotNull;
 
 
@@ -52,6 +51,9 @@ public class IClassDO  {
     private String className;
 
 
-
+    /**
+     * 院系名称
+     */
+    private String departmentName;
 
 }

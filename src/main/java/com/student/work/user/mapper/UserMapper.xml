@@ -33,7 +33,7 @@
 			<if test="param.status != null and param.status != ''">AND status =# {param.status}</if>
 			<if test="param.delFlag != null and param.delFlag != ''">AND del_flag =# {param.delFlag}</if>
 		</where>
-		ORDER BY ID
+		ORDER BY ID DESC
 	</select>
 	
 

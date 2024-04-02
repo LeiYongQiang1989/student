@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.work.grade.mapper.GradeMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResultMap" type="com.student.work.grade.model.GradeVO">
+        <result column="id" property="id" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+        <result column="student_id" property="studentId" />
+        <result column="student_name" property="studentName" />
+        <result column="grade_number" property="gradeNumber" />
+        <result column="department_id" property="departmentId" />
+        <result column="department_name" property="departmentName" />
+        <result column="subject_name" property="subjectName" />
+        <result column="subject_id" property="subjectId" />
+        <result column="class_name" property="className" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <select id="getPage" resultMap="ResultMap" parameterType="com.student.work.grade.model.GradeDTO">
+        select
+            a.id as id,
+            a.create_id as create_id,
+            a.create_name as create_name,
+            a.student_id as student_id,
+            a.student_name as student_name,
+            a.grade_number as grade_number,
+            a.department_id as department_id,
+            a.department_name as department_name,
+            a.subject_id as subject_id,
+            a.create_time as create_time,
+            a.update_time as update_time,
+            b.class_name as class_name,
+            c.subject_name as subject_name
+        from
+            tb_grade  a left join tb_class b  on a.class_id =b.id
+            left join tb_subject c on c.id=a.subject_id
+        <where>
+            <if test="param.createId != null ">AND create_id =# {param.createId}</if>
+            <if test="param.classId != null">AND class_id =# {param.classId}</if>
+            <if test="param.studentId != null ">AND student_id =# {param.studentId}</if>
+            <if test="param.subjectId != null ">AND subject_id =# {param.subjectId}</if>
+            <if test="param.departmentId != null ">AND department_id =# {param.departmentId}</if>
+        </where>
+        ORDER BY ID DESC
+    </select>
+
+</mapper>

@@ -38,18 +38,18 @@ public class GradeDO extends BaseDO {
 
 
     /**
-     * 创建人
+     * 创建人id
      */
-    @TableField("create_user")
-    @NotNull(message = "创建人不能为空")
-    private Integer createUser;
+    @TableField("create_id")
+    @NotNull(message = "创建人id不能为空")
+    private Integer createId;
 
     /**
-     * 班级id
+     * 创建人
      */
-    @TableField("class_id")
-    @NotNull(message = "班级id不能为空")
-    private Integer classId;
+    @TableField("create_name")
+    private String createName;
+
 
 
     /**
@@ -59,12 +59,14 @@ public class GradeDO extends BaseDO {
     @NotNull(message = "学生id不能为空")
     private Integer studentId;
 
+
     /**
-     * 学科id
+     * 学生姓名
      */
-    @TableField("subject_id")
-    @NotNull(message = "学科id不能为空")
-    private Integer subjectId;
+    @TableField("student_name")
+    private String studentName;
+
+
 
 
     /**
@@ -75,6 +77,34 @@ public class GradeDO extends BaseDO {
     private String gradeNumber;
 
 
+    /**
+     * 院系id
+     */
+    @TableField("department_id")
+    @NotNull(message = "院系id不能为空")
+    private Integer departmentId;
+
+    /**
+     * 院系名称
+     */
+    @TableField("department_name")
+    private String departmentName;
+
+
+    /**
+     * 学科id
+     */
+    @TableField("subject_id")
+    @NotNull(message = "学科id不能为空")
+    private Integer subjectId;
+
+
+    /**
+     * 班级id
+     */
+    @TableField("class_id")
+    @NotNull(message = "班级id不能为空")
+    private Integer classId;
 
 
 }
