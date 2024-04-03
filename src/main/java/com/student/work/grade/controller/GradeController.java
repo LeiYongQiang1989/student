@@ -8,7 +8,9 @@ import com.student.shiro.controller.CheckUserController;
 import com.student.work.grade.model.GradeDO;
 import com.student.work.grade.model.GradeDTO;
 import com.student.work.grade.model.GradeVO;
+import com.student.work.grade.model.StatisticVO;
 import com.student.work.grade.service.GradeService;
+import com.student.work.user.model.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +44,13 @@ public class GradeController extends CheckUserController {
      */
     @PostMapping(value = "/getPage")
     public Result getPage(@RequestBody GradeDTO gradeDTO)  {
+        UserDO  userDO = getUser();
         Page<GradeVO> page = new Page<>(gradeDTO.getPageNo(),gradeDTO.getPageSize());
+        if (userDO.getRoleCode() == "3") {
+            gradeDTO.setStudentId(userDO.getId());
+        } else if (userDO.getRoleCode() == "2") {
+            gradeDTO.setCreateId(userDO.getId());
+        }
         Page<GradeVO> result = gradeService.getPage(page, gradeDTO);
         return ResultGenerator.genOkResult(result);
     }
@@ -97,5 +105,27 @@ public class GradeController extends CheckUserController {
         }
         return ResultGenerator.genOkResult(i);
     }
+
+
+    /**
+     *
+     * 3. 统计分析 ：最高分、最低分、平均分、优秀率、良好率、及格率、未及格率
+     *  5.导出
+     */
+    /**
+     * @Title: getStatistics
+     * @Description: 统计
+     * @param gradeDTO
+     * @return
+     */
+    @PostMapping(value = "/getStatistics")
+    public Result getStatistics(@RequestBody GradeDTO gradeDTO)  {
+        if (gradeDTO.getSubjectId() == null ) {
+            return ResultGenerator.genFailedResult("统计时学科id不能为空！");
+        }
+        StatisticVO result = gradeService.getStatistics(gradeDTO);
+        return ResultGenerator.genOkResult(result);
+    }
+
 
 }

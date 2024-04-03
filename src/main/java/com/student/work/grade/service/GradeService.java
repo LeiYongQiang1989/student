@@ -1,10 +1,10 @@
 package com.student.work.grade.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.student.work.Class.model.IClassDO;
 import com.student.work.grade.model.GradeDO;
 import com.student.work.grade.model.GradeDTO;
 import com.student.work.grade.model.GradeVO;
+import com.student.work.grade.model.StatisticVO;
 
 import java.util.List;
 import java.util.Map;
@@ -24,4 +24,6 @@ public interface GradeService {
     Map<String, String> update(GradeDO gradeDO);
 
     int deleteBatchIds(List<Integer> ids);
+
+    StatisticVO getStatistics(GradeDTO gradeDTO);
 }

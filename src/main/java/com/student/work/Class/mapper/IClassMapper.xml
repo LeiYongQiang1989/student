@@ -23,28 +23,39 @@
 		</where>
 		ORDER BY ID DESC
 	</select>
-	
 
-	<update id="updateUser" parameterType="com.student.work.user.model.UserDO">
-		update tb_user
-		<set>
-			<trim suffixOverrides=",">
-				<if test="param.userNo != null ">user_no=#{param.userNo}, </if>
-				<if test="param.realName != null">real_name=#{param.realName}, </if>
-				<if test="param.phone != null">phone=#{param.phone}, </if>
-				<if test="param.passWord != null">pass_word=#{param.passWord}, </if>
-				<if test="param.roleCode != null">role_code=#{param.roleCode}, </if>
-				<if test="param.status != null">status=#{param.status}, </if>
-				<if test="param.delFlag != null">del_flag=#{param.delFlag}, </if>
-				<if test="param.sex != null">sex=#{param.sex}, </if>
-				<if test="param.updateTime != null">update_time=#{param.updateTime}, </if>
-			</trim>
-		</set>
-		where id=#{param.id}
-	</update>
+    <select id="getOne" resultType="com.student.work.Class.model.IClassDO" parameterType="com.student.work.Class.model.IClassDO">
+		select
+			*
+		from
+			tb_class
+		<where>
+			<if test="param.className != null and param.className != ''">class_name =# {param.className}</if>
+		</where>
 
-	<delete id="deleteUser" parameterType="long">
-		delete from tb_user where id=#{id}
-	</delete>
+	</select>
+
+
+<!--    <update id="updateUser" parameterType="com.student.work.user.model.UserDO">-->
+<!--		update tb_user-->
+<!--		<set>-->
+<!--			<trim suffixOverrides=",">-->
+<!--				<if test="param.userNo != null ">user_no=#{param.userNo}, </if>-->
+<!--				<if test="param.realName != null">real_name=#{param.realName}, </if>-->
+<!--				<if test="param.phone != null">phone=#{param.phone}, </if>-->
+<!--				<if test="param.passWord != null">pass_word=#{param.passWord}, </if>-->
+<!--				<if test="param.roleCode != null">role_code=#{param.roleCode}, </if>-->
+<!--				<if test="param.status != null">status=#{param.status}, </if>-->
+<!--				<if test="param.delFlag != null">del_flag=#{param.delFlag}, </if>-->
+<!--				<if test="param.sex != null">sex=#{param.sex}, </if>-->
+<!--				<if test="param.updateTime != null">update_time=#{param.updateTime}, </if>-->
+<!--			</trim>-->
+<!--		</set>-->
+<!--		where id=#{param.id}-->
+<!--	</update>-->
+
+<!--	<delete id="deleteUser" parameterType="long">-->
+<!--		delete from tb_user where id=#{id}-->
+<!--	</delete>-->
 
 </mapper>

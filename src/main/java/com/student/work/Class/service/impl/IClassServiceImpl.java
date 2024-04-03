@@ -5,6 +5,7 @@ import com.student.work.Class.mapper.IClassMapper;
 import com.student.work.Class.model.IClassDO;
 import com.student.work.Class.model.IClassDTO;
 import com.student.work.Class.service.IClassService;
+import com.student.work.subject.model.SubjectDO;
 import com.student.work.user.model.UserDO;
 import com.student.work.user.model.UserDTO;
 
@@ -33,6 +34,13 @@ public class IClassServiceImpl implements IClassService {
     @Override
     public Map<String, String> addClass(IClassDO iClassDO) {
         Map<String, String> resMap = new HashMap<>(2);
+        IClassDO iClassSource  = iClassMapper.getOne(iClassDO);
+        if (iClassSource != null) {
+            resMap.put("resultCount", "0");
+            resMap.put("resultMsg","该班级已存在！");
+            return resMap;
+        }
+
         int result = iClassMapper.insert(iClassDO);
         resMap.put("resultCount",String.valueOf(result));
         if (result > 0) {

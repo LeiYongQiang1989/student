@@ -23,4 +23,5 @@ public interface IClassMapper extends BaseMapper<IClassDO> {
      */
     Page<IClassDO> selectPage(Page<UserDTO> page, @Param("param") IClassDTO iClassDTO);
 
+    IClassDO getOne(@Param("param") IClassDO iClassDO);
 }

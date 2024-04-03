@@ -96,4 +96,7 @@ public class GradeVO {
      */
     private Date updateTime;
 
+
+
+
 }

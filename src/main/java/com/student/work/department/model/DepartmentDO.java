@@ -12,7 +12,9 @@ package com.student.work.department.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -46,7 +48,7 @@ public class DepartmentDO {
 
 
 
-    private List<Integer> ids;
+
 
 
 

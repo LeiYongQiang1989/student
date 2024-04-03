@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.student.work.grade.model.GradeDO;
 import com.student.work.grade.model.GradeDTO;
 import com.student.work.grade.model.GradeVO;
+import com.student.work.grade.model.StatisticVO;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -18,6 +19,11 @@ public interface GradeMapper extends BaseMapper<GradeDO> {
 
 
     Page<GradeVO> getPage(Page<GradeVO> page, @Param("param") GradeDTO gradeDTO);
+
+
+    StatisticVO getStatistics(@Param("param")GradeDTO gradeDTO);
+
+    int getCount(@Param("param") GradeDTO gradeDTO);
 
 
 }

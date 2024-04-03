@@ -48,4 +48,38 @@
         ORDER BY ID DESC
     </select>
 
+
+    <select id="getStatistics" resultType="com.student.work.grade.model.StatisticVO"
+            parameterType="com.student.work.grade.model.GradeDTO">
+        select
+         max(grade_number) maxGradeNumber,
+         min(grade_number) minGradeNumber,
+         avg (minGradeNumber) avGradeNumber
+        from
+         tb_grade
+        <where>
+            <if test="param.subjectId != null ">AND subject_id =# {param.subjectId}</if>
+            <if test="param.createId != null ">AND create_id =# {param.createId}</if>
+            <if test="param.classId != null">AND class_id =# {param.classId}</if>
+            <if test="param.departmentId != null ">AND department_id =# {param.departmentId}</if>
+        </where>
+    </select>
+
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="com.student.work.grade.model.GradeDTO">
+        select
+            COUNT(grade_number)
+        from
+            tb_grade
+        <where>
+            <if test="param.endNumber != null and param.endNumber != ''">AND grade_number &lt; {param.endNumber}</if>
+            <if test="param.startNumber != null and param.startNumber != ''">AND grade_number &gt;= {param.subjectId}</if>
+            <if test="param.subjectId != null ">AND subject_id =# {param.subjectId}</if>
+            <if test="param.createId != null ">AND create_id =# {param.createId}</if>
+            <if test="param.classId != null">AND class_id =# {param.classId}</if>
+            <if test="param.departmentId != null ">AND department_id =# {param.departmentId}</if>
+        </where>
+    </select>
+
+
 </mapper>

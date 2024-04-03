@@ -1,5 +1,7 @@
 package com.student.work.department.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.student.work.Class.model.IClassDO;
 import com.student.work.department.mapper.DepartmentMapper;
 import com.student.work.department.model.DepartmentDO;
@@ -29,7 +31,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Map<String, String> add(DepartmentDO departmentDO) {
-        Map<String, String> resMap = new HashMap<>();
+        Map<String, String> resMap = new HashMap<>(2);
+        DepartmentDO departmentSource  = departmentMapper.selectOne(new LambdaQueryWrapper<DepartmentDO>()
+                .eq(DepartmentDO::getDepartmentName,departmentDO.getDepartmentName()));
+        if (departmentSource != null) {
+            resMap.put("resultCount", "0");
+            resMap.put("resultMsg","该班级已存在！");
+            return resMap;
+        }
         int result = departmentMapper.insert(departmentDO);
         resMap.put("resultCount",String.valueOf(result));
         if (result > 0) {
@@ -54,8 +63,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public int deleteBatchIds(List<Integer> ids) {
-        return departmentMapper.deleteBatchIds(ids);
+    public int deleteById(Integer id) {
+        return departmentMapper.deleteById(id);
     }
 
 

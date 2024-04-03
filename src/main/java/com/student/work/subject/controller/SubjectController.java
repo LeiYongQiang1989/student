@@ -1,12 +1,11 @@
-package com.student.work.department.controller;
+package com.student.work.subject.controller;
 
 import com.student.core.RestConstant;
 import com.student.core.Result;
 import com.student.core.ResultGenerator;
 import com.student.shiro.controller.CheckUserController;
-import com.student.work.Class.model.IClassDO;
-import com.student.work.department.model.DepartmentDO;
-import com.student.work.department.service.DepartmentService;
+import com.student.work.subject.model.SubjectDO;
+import com.student.work.subject.service.SubjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +14,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @ClassName: DepartmentController
- * @Description: 院系控制层
+ * @ClassName: SubjectController
+ * @Description: 学科（课程）控制层
  * @author: LeiYongQiang
- * @date: 2024-04-02
+ * @date: 2024-04-03
  */
 @RestController
-@RequestMapping(DepartmentController.PATH)
+@RequestMapping(SubjectController.PATH)
 @Slf4j
-public class DepartmentController extends CheckUserController {
+public class SubjectController extends CheckUserController {
 
-    public final static String PATH = RestConstant.VERSION_V1 + "/department";
+    public final static String PATH = RestConstant.VERSION_V1 + "/subject";
 
     @Resource
-    private DepartmentService departmentService;
+    private SubjectService subjectService;
 
     /**
      * @Title: getList
@@ -36,8 +35,8 @@ public class DepartmentController extends CheckUserController {
      * @return
      */
     @GetMapping(value = "/getList")
-    public Result getList() throws Exception {
-       List<IClassDO> result = departmentService.getList();
+    public Result getList(@RequestBody SubjectDO subjectDO) throws Exception {
+        List<SubjectDO> result = subjectService.getList(subjectDO);
         return ResultGenerator.genOkResult(result);
     }
 
@@ -45,12 +44,12 @@ public class DepartmentController extends CheckUserController {
     /**
      * @Title: add
      * @Description: 添加
-     * @param departmentDO
-     * @returnd
+     * @param subjectDO
+     * @return
      */
     @PostMapping(value = "/add")
-    public Result add(@RequestBody @Validated  DepartmentDO departmentDO) throws Exception {
-        Map<String,String> result = departmentService.add(departmentDO);
+    public Result getClassPage(@RequestBody @Validated  SubjectDO subjectDO) throws Exception {
+        Map<String,String> result = subjectService.add(subjectDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
             return ResultGenerator.genOkResult("添加成功");
         }
@@ -63,11 +62,11 @@ public class DepartmentController extends CheckUserController {
      * @return
      */
     @PostMapping("/updateById")
-    public Result update(@RequestBody  DepartmentDO departmentDO) {
-        if (departmentDO.getId() == null) {
+    public Result update(@RequestBody  SubjectDO subjectDO) {
+        if (subjectDO.getId() == null) {
             return ResultGenerator.genFailedResult("主键id不能为空！");
         }
-        Map<String,String> result = departmentService.update(departmentDO);
+        Map<String,String> result = subjectService.update(subjectDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
             return ResultGenerator.genOkResult("修改成功");
         }
@@ -81,12 +80,12 @@ public class DepartmentController extends CheckUserController {
      * @return
      */
     @PostMapping(value = "/deleteById")
-    public Result deleteById(@RequestBody DepartmentDO departmentDO) {
-        if (departmentDO.getId() == null) {
+    public Result deleteBatchIds(@RequestBody SubjectDO subjectDO) {
+        if (subjectDO.getId() == null) {
             return ResultGenerator.genFailedResult("id不能为空！");
         }
-        int i = departmentService.deleteById(departmentDO.getId());
-        if (i < 0) {
+        int i = subjectService.deleteById(subjectDO.getId());
+        if (i < 1) {
             return ResultGenerator.genFailedResult("删除失败");
         }
         return ResultGenerator.genOkResult(i);

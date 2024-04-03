@@ -124,7 +124,7 @@ public class SystemConfigConstant {
 	/**
 	 * 登录帐号key
 	 */
-	public static final String LOGINID = "loginId";
+	public static final String LOGINID = "userNo";
 
 	/**
 	 * 登录用户信息key
@@ -134,12 +134,12 @@ public class SystemConfigConstant {
 	/**
 	 * 登录用户帐号key
 	 */
-	public static final String USERNAME = "username";
+	public static final String USERNAME = "userName";
 
 	/**
 	 * 登录用户真名key
 	 */
-	public static final String CURUSERNAME = "curUserName";
+	public static final String CURUSERNAME = "realName";
 	
 	/**
 	 * 登录用户id
@@ -149,7 +149,7 @@ public class SystemConfigConstant {
 	/**
 	 * 登录用户角色key
 	 */
-	public static final String ROLES = "roles";
+	public static final String ROLE = "roleCode";
 	
 	/**
 	 * 登录用户角色id key

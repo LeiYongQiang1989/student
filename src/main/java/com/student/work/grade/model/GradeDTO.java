@@ -31,7 +31,7 @@ public class GradeDTO extends BaseDTO {
     /**
      * 创建人
      */
-    private Integer createUser;
+    private Integer createId;
 
     /**
      * 班级id
@@ -57,5 +57,12 @@ public class GradeDTO extends BaseDTO {
 
 
     private List<Integer> ids;
+
+
+
+
+    private String endNumber;
+
+    private String startNumber;
 
 }

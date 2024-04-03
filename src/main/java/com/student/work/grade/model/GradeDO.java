@@ -25,11 +25,7 @@ import javax.validation.constraints.NotNull;
  * @date: 2024-04-01
  */
 
-/**
- * 1.添加   2. 修改
- * 3. 统计分析 ：最高分、最低分、平均分、优秀率、良好率、及格率、未及格率
- * 4. 查询  5.导出
- */
+
 @Data
 @TableName("tb_grade")
 public class GradeDO extends BaseDO {

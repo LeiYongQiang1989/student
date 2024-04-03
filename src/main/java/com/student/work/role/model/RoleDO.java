@@ -36,10 +36,10 @@ public class RoleDO  {
     private Integer id;
 
     /**
-     * 学科名称
+     * 角色名称
      */
     @TableField("role_name")
-    @NotNull(message = "学科名称不能为空")
+    @NotNull(message = "角色名称不能为空")
     private String roleName;
 
 }

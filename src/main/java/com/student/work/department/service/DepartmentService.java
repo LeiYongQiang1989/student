@@ -20,5 +20,5 @@ public interface DepartmentService {
 
     Map<String, String> update(DepartmentDO departmentDO);
 
-    int deleteBatchIds(List<Integer> ids);
+    int deleteById(Integer id);
 }

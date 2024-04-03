@@ -195,7 +195,7 @@ public class LoginController extends CheckUserController {
 		HashMap<Object, Object> userMap = CollUtil.newHashMap();
 		userMap.put(SystemConfigConstant.LOGINID, userNo);
 		userMap.put(SystemConfigConstant.USERINFO, JSONUtil.toJsonStr(sysUser));
-		userMap.put(SystemConfigConstant.USERNAME, userNo);
+		userMap.put(SystemConfigConstant.ROLE, sysUser.getRoleCode());
 		userMap.put(SystemConfigConstant.CURUSERNAME, sysUser.getRealName());
 		userMap.put(SystemConfigConstant.ID, sysUser.getId());
 		userMap.put(SystemConfigConstant.LOGIN_IP, clientIp);
