@@ -31,7 +31,7 @@ import java.util.Map;
 @Slf4j
 public class GradeController extends CheckUserController {
 
-    public final static String PATH = RestConstant.VERSION_V1 + "/Iclass";
+    public final static String PATH = RestConstant.VERSION_V1 + "/grade";
 
     @Resource
     private GradeService gradeService;

@@ -6,6 +6,7 @@ import com.student.work.Class.model.IClassDO;
 import com.student.work.department.mapper.DepartmentMapper;
 import com.student.work.department.model.DepartmentDO;
 import com.student.work.department.service.DepartmentService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @author: LeiYongQiang
  * @date: 2024-04-02
  */
+@Service("departmentService")
 public class DepartmentServiceImpl implements DepartmentService {
 
 

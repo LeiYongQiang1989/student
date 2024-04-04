@@ -46,7 +46,7 @@ jasypt:
 info:
   app:
     name: ${spring.application.name}
-    description: "upms权限管理"
+    description: "学生成绩管理系统"
     version: "1.0.0"
 
 #ws:

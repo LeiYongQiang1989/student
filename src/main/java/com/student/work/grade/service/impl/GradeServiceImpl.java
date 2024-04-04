@@ -7,6 +7,7 @@ import com.student.work.grade.model.GradeDTO;
 import com.student.work.grade.model.GradeVO;
 import com.student.work.grade.model.StatisticVO;
 import com.student.work.grade.service.GradeService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @author: LeiYongQiang
  * @date: 2024-04-02
  */
+@Service("gradeService")
 public class GradeServiceImpl implements GradeService {
 
     @Resource

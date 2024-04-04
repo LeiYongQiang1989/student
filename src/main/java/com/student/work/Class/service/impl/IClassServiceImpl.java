@@ -8,6 +8,7 @@ import com.student.work.Class.service.IClassService;
 import com.student.work.subject.model.SubjectDO;
 import com.student.work.user.model.UserDO;
 import com.student.work.user.model.UserDTO;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @author: LeiYongQiang
  * @date: 2024-04-01
  */
+@Service("IClassService")
 public class IClassServiceImpl implements IClassService {
 
     @Resource

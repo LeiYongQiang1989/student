@@ -3,6 +3,7 @@ package com.student.work.subject.service.impl;
 import com.student.work.subject.mapper.SubjectMapper;
 import com.student.work.subject.model.SubjectDO;
 import com.student.work.subject.service.SubjectService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author: LeiYongQiang
  * @date: 2024-04-03
  */
+@Service("subjectService")
 public class SubjectServiceImpl implements SubjectService {
 
     @Resource
