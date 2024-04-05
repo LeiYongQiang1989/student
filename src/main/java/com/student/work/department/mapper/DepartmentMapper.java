@@ -16,6 +16,6 @@ public interface DepartmentMapper extends BaseMapper<DepartmentDO> {
 
 
     List<IClassDO> selectList();
-//
-//    IClassDO getOne(DepartmentDO departmentDO);
+
+
 }
