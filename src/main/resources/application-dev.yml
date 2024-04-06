@@ -52,7 +52,7 @@ SMS2:
 SMS4:
   LOGIN: f8d4fad5
 authority:
-  whiteIpList: 127.0.0.0.1,
+  whiteIpList: 127.0.0.0.1,0:0:0:0:0:0:0:1,
   loginUserToken: prod_login_
   salt:
 

@@ -7,15 +7,16 @@ import com.student.utils.RedisUtil;
 import com.student.work.user.model.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.buf.MessageBytes;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Field;
+import java.util.*;
+
+import static com.alibaba.druid.util.DruidDataSourceUtils.getUrl;
 
 /**
  * @author LeiYongQiang
@@ -32,6 +33,8 @@ public class Interceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         request.setAttribute("startTime",System.currentTimeMillis());
+        System.out.println("请求URL：" + request.getRequestURI());
+//        String url = getRequestURI(request);
         if ((request.getRequestURI().contains("/login")) || (request.getRequestURI().contains("/secretKey"))) {
             return true;
         }
@@ -169,8 +172,58 @@ public class Interceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) throws Exception{
+
         Long startTime = (Long)request.getAttribute("startTime");
-        log.info("接口[" + request.getRequestURI() + "]当次请求耗时：" + (System.currentTimeMillis() - startTime) + "ms");
+//        String url = getRequestURI(request);
+        String url = getRequestURI(request);
+        log.info("接口[" + url + "]当次请求耗时：" + (System.currentTimeMillis() - startTime) + "ms");
+    }
+
+    private String getRequestURI(HttpServletRequest request) throws Exception {
+        Object a = findCoyoteRequest(request);
+        Field coyoteRequest = a.getClass().getDeclaredField("coyoteRequest");
+        coyoteRequest.setAccessible(true);
+        Object b = coyoteRequest.get(a);
+
+        Field uriMB = b.getClass().getDeclaredField("uriMB");
+        uriMB.setAccessible(true);
+        MessageBytes c = (MessageBytes)uriMB.get(b);
+        return c.getString();
+    }
+
+
+    //根据Field获得对应的Class
+    private Class getClassByName(Class classObject, String name){
+        Map<Class,List<Field>> fieldMap = new HashMap<>();
+        Class returnClass = null;
+        Class tempClass = classObject;
+        while (tempClass != null) {
+            fieldMap.put(tempClass,Arrays.asList(tempClass .getDeclaredFields()));
+            tempClass = tempClass.getSuperclass();
+        }
+
+        for(Map.Entry<Class,List<Field>> entry: fieldMap.entrySet()){
+            for (Field f : entry.getValue()) {
+                if(f.getName().equals(name)){
+                    returnClass = entry.getKey();
+                    break;
+                }
+            }
+        }
+        return returnClass;
+    }
+
+    //递归遍历父类寻找coyoteRequest Field
+    private Object findCoyoteRequest(Object request)  throws Exception {
+        Class a = getClassByName(request.getClass(),"request");
+        Field request1 = a.getDeclaredField("request");
+        request1.setAccessible(true);
+        Object b = request1.get(request);
+        if(getClassByName(b.getClass(),"coyoteRequest") == null){
+            return findCoyoteRequest(b);
+        }else{
+            return b;
+        }
     }
 
 }

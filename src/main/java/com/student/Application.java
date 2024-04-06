@@ -57,9 +57,9 @@ public class Application {
 	public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
 		ServletRegistrationBean reg = new ServletRegistrationBean(dispatcherServlet);
 		reg.getUrlMappings().clear();
-		reg.addUrlMappings("/api/*");
+		reg.addUrlMappings("/*");
 		String appname = environment.getProperty("spring.application.name");
-		reg.addUrlMappings(StrUtil.format("/{}/api/*", appname));
+		reg.addUrlMappings(StrUtil.format("/{}/*", appname));
 		reg.addUrlMappings("/*");
 		return reg;
 	}

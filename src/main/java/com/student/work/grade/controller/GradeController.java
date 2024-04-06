@@ -64,6 +64,11 @@ public class GradeController extends CheckUserController {
      */
     @PostMapping(value = "/add")
     public Result add(@RequestBody @Validated GradeDO gradeDO) throws Exception {
+        // 角色为3的学生无添加、修改、删除权限
+        UserDO  userDO = getUser();
+        if (userDO.getRoleCode() == "3") {
+            return ResultGenerator.genFailedResult("该用户无权限");
+        }
         Map<String,String> result = gradeService.addGrade(gradeDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
             return ResultGenerator.genOkResult("添加成功");
@@ -78,6 +83,11 @@ public class GradeController extends CheckUserController {
      */
     @PostMapping("/updateById")
     public Result update(@RequestBody  GradeDO gradeDO) {
+        // 角色为3的学生无添加、修改、删除权限
+        UserDO  userDO = getUser();
+        if (userDO.getRoleCode() == "3") {
+            return ResultGenerator.genFailedResult("该用户无权限");
+        }
         if (gradeDO.getId() == null) {
             return ResultGenerator.genFailedResult("主键id不能为空！");
         }
@@ -96,6 +106,11 @@ public class GradeController extends CheckUserController {
      */
     @PostMapping(value = "/deleteBatchIds")
     public Result deleteBatchIds(@RequestBody GradeDTO gradeDTO) {
+        // 角色为3的学生无添加、修改、删除权限
+        UserDO  userDO = getUser();
+        if (userDO.getRoleCode() == "3") {
+            return ResultGenerator.genFailedResult("该用户无权限");
+        }
         if (gradeDTO.getIds().size() == 0) {
             return ResultGenerator.genFailedResult("id不能为空！");
         }
@@ -120,6 +135,11 @@ public class GradeController extends CheckUserController {
      */
     @PostMapping(value = "/getStatistics")
     public Result getStatistics(@RequestBody GradeDTO gradeDTO)  {
+        // 角色为3的学生无添加、修改、删除权限
+        UserDO  userDO = getUser();
+        if (userDO.getRoleCode() == "3") {
+            return ResultGenerator.genFailedResult("该用户无权限");
+        }
         if (gradeDTO.getSubjectId() == null ) {
             return ResultGenerator.genFailedResult("统计时学科id不能为空！");
         }
