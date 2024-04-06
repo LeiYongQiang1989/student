@@ -64,32 +64,32 @@ public class Application {
 		return reg;
 	}
 	
-	@Bean
-	public ConfigurableServletWebServerFactory configurableServletWebServerFactory() {
-		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-
-		factory.addContextCustomizers(context -> {
-			SecurityConstraint securityConstraint = new SecurityConstraint();
-			securityConstraint.setUserConstraint("CONFIDENTIAL");
-			SecurityCollection collection = new SecurityCollection();
-			collection.addPattern("/*");
-			//collection.addMethod("HEAD");
-			collection.addMethod("PUT");
-			collection.addMethod("DELETE");
-			// collection.addMethod("OPTIONS");
-			// collection.addMethod("TRACE");
-			collection.addMethod("COPY");
-			collection.addMethod("SEARCH");
-			collection.addMethod("PROPFIND");
-			securityConstraint.addCollection(collection);
-			securityConstraint.setAuthConstraint(true);
-			context.addConstraint(securityConstraint);
-			context.setUseHttpOnly(true);
-		});
-		// 如果需要禁用TRACE请求，需添加以下代码：
-		factory.addConnectorCustomizers(connector -> {
-			connector.setAllowTrace(true);
-		});
-		return factory;
-	}
+//	@Bean
+//	public ConfigurableServletWebServerFactory configurableServletWebServerFactory() {
+//		TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+//
+//		factory.addContextCustomizers(context -> {
+//			SecurityConstraint securityConstraint = new SecurityConstraint();
+//			securityConstraint.setUserConstraint("CONFIDENTIAL");
+//			SecurityCollection collection = new SecurityCollection();
+//			collection.addPattern("/*");
+//			//collection.addMethod("HEAD");
+//			collection.addMethod("PUT");
+//			collection.addMethod("DELETE");
+//			// collection.addMethod("OPTIONS");
+//			// collection.addMethod("TRACE");
+//			collection.addMethod("COPY");
+//			collection.addMethod("SEARCH");
+//			collection.addMethod("PROPFIND");
+//			securityConstraint.addCollection(collection);
+//			securityConstraint.setAuthConstraint(true);
+//			context.addConstraint(securityConstraint);
+//			context.setUseHttpOnly(true);
+//		});
+//		// 如果需要禁用TRACE请求，需添加以下代码：
+//		factory.addConnectorCustomizers(connector -> {
+//			connector.setAllowTrace(true);
+//		});
+//		return factory;
+//	}
 }
