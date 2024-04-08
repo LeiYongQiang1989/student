@@ -33,17 +33,19 @@
             a.subject_id as subject_id,
             a.create_time as create_time,
             a.update_time as update_time,
-            b.subject_name as subject_name
+            b.class_name as class_name,
+            c.subject_name as subject_name
         from
-            tb_grade  a left join tb_subject b  on b.id=a.subject_id
+            tb_grade  a left join tb_class b  on a.class_id =b.id
+            left join tb_subject c on c.id=a.subject_id
         <where>
-            <if test="param.createId != null ">and a.create_id = #{param.createId}</if>
-            <if test="param.classId != null">and a.class_id = #{param.classId}</if>
-            <if test="param.studentId != null ">and a.student_id = #{param.studentId}</if>
-            <if test="param.subjectId != null ">and a.subject_id = #{param.subjectId}</if>
-            <if test="param.departmentId != null ">and a.department_id = #{param.departmentId}</if>
+            <if test="param.createId != null ">AND create_id =# {param.createId}</if>
+            <if test="param.classId != null">AND class_id =# {param.classId}</if>
+            <if test="param.studentId != null ">AND student_id =# {param.studentId}</if>
+            <if test="param.subjectId != null ">AND subject_id =# {param.subjectId}</if>
+            <if test="param.departmentId != null ">AND department_id =# {param.departmentId}</if>
         </where>
-        ORDER BY a.id DESC
+        ORDER BY ID DESC
     </select>
 
 
@@ -52,14 +54,14 @@
         select
          max(grade_number) maxGradeNumber,
          min(grade_number) minGradeNumber,
-         format(avg (grade_number),2) avGradeNumber
+         avg (minGradeNumber) avGradeNumber
         from
          tb_grade
         <where>
-            <if test="param.subjectId != null ">and subject_id = #{param.subjectId}</if>
-            <if test="param.createId != null ">and create_id = #{param.createId}</if>
-            <if test="param.classId != null">and class_id = #{param.classId}</if>
-            <if test="param.departmentId != null ">and department_id = #{param.departmentId}</if>
+            <if test="param.subjectId != null ">AND subject_id =# {param.subjectId}</if>
+            <if test="param.createId != null ">AND create_id =# {param.createId}</if>
+            <if test="param.classId != null">AND class_id =# {param.classId}</if>
+            <if test="param.departmentId != null ">AND department_id =# {param.departmentId}</if>
         </where>
     </select>
 
@@ -70,50 +72,13 @@
         from
             tb_grade
         <where>
-            <if test="param.endNumber != null and param.endNumber != ''">and grade_number &lt; #{param.endNumber}</if>
-            <if test="param.startNumber != null and param.startNumber != ''">and grade_number &gt;= #{param.startNumber}</if>
-            <if test="param.subjectId != null ">and subject_id = #{param.subjectId}</if>
-            <if test="param.createId != null ">and create_id = #{param.createId}</if>
-            <if test="param.classId != null">and class_id = #{param.classId}</if>
-            <if test="param.departmentId != null ">and department_id = #{param.departmentId}</if>
+            <if test="param.endNumber != null and param.endNumber != ''">AND grade_number &lt; {param.endNumber}</if>
+            <if test="param.startNumber != null and param.startNumber != ''">AND grade_number &gt;= {param.subjectId}</if>
+            <if test="param.subjectId != null ">AND subject_id =# {param.subjectId}</if>
+            <if test="param.createId != null ">AND create_id =# {param.createId}</if>
+            <if test="param.classId != null">AND class_id =# {param.classId}</if>
+            <if test="param.departmentId != null ">AND department_id =# {param.departmentId}</if>
         </where>
-    </select>
-
-    <select id="getOne" resultType="com.student.work.grade.model.GradeDO" parameterType="com.student.work.grade.model.GradeDTO">
-        select
-            *
-        from
-            tb_grade
-        <where>
-            <if test="param.studentId != null ">and student_id = #{param.studentId}</if>
-            <if test="param.subjectId != null ">and subject_id = #{param.subjectId}</if>
-            <if test="param.createId != null ">and create_id = #{param.createId}</if>
-            <if test="param.classId != null">and class_id = #{param.classId}</if>
-            <if test="param.departmentId != null ">and department_id = #{param.departmentId}</if>
-        </where>
-    </select>
-
-
-    <select id="getList" resultType="com.student.work.grade.model.GradeEx" parameterType="com.student.work.grade.model.GradeDTO">
-        select
-            a.create_name as createName,
-            a.student_name as studentName,
-            a.grade_number as gradeNumber,
-            a.department_name as departmentName,
-            date_format( a.create_time,'%Y-%m-%d %H:%i:%S')  as createTime,
-            date_format( a.update_time,'%Y-%m-%d %H:%i:%S')  as updateTime,
-            a.class_name as className,
-            b.subject_name as subjectName
-        from
-            tb_grade  a left join tb_subject b  on b.id=a.subject_id
-        <where>
-            <if test="param.createId != null ">and a.create_id = #{param.createId}</if>
-            <if test="param.classId != null">and a.class_id = #{param.classId}</if>
-            <if test="param.studentId != null ">and a.student_id = #{param.studentId}</if>
-            <if test="param.subjectId != null ">and a.subject_id = #{param.subjectId}</if>
-            <if test="param.departmentId != null ">and a.department_id = #{param.departmentId}</if>
-        </where>
-        ORDER BY a.id DESC
     </select>
 
 

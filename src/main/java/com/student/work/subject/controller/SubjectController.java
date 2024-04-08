@@ -34,7 +34,7 @@ public class SubjectController extends CheckUserController {
      * @Description: 查询所有的
      * @return
      */
-    @PostMapping(value = "/getList")
+    @GetMapping(value = "/getList")
     public Result getList(@RequestBody SubjectDO subjectDO) throws Exception {
         List<SubjectDO> result = subjectService.getList(subjectDO);
         return ResultGenerator.genOkResult(result);
@@ -88,7 +88,7 @@ public class SubjectController extends CheckUserController {
         if (i < 1) {
             return ResultGenerator.genFailedResult("删除失败");
         }
-        return ResultGenerator.genOkResult("删除成功",i);
+        return ResultGenerator.genOkResult(i);
     }
 
 }

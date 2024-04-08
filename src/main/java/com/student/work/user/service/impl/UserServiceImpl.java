@@ -11,7 +11,6 @@
 package com.student.work.user.service.impl;
 
 
-import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.student.utils.Sm4Util;
 import com.student.work.user.mapper.UserMapper;
@@ -98,7 +97,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Map<String, String> update(UserDO userDo) {
 		Map<String, String> resMap = new HashMap<>();
-		userDo.setUpdateTime(new DateTime());
 		int result = userMapper.updateById(userDo);
 		resMap.put("resultCount",String.valueOf(result));
 		if (result > 0) {
