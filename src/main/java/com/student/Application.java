@@ -11,9 +11,6 @@
 package com.student;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -62,19 +59,6 @@ public class Application {
 		reg.addUrlMappings("/*");
 		return reg;
 	}
-
-	/**
-	 * 配置分页插件:无此配置分页查询组件不生效
-	 *
-	 **/
-	@Bean
-	public MybatisPlusInterceptor mybatisPlusInterceptor() {
-		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-		interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-		return interceptor;
-	}
-
-
 	
 //	@Bean
 //	public ConfigurableServletWebServerFactory configurableServletWebServerFactory() {

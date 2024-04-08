@@ -12,19 +12,16 @@
     </resultMap>
 
 
-	<select id="getPage" resultMap="BaseResultMap" parameterType="com.student.work.Class.model.IClassDTO">
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.student.work.Class.model.IClassDTO">
 		select
-    		a.id as id,
-    		a.class_name as class_name,
-    		a.department_id as department_id,
-    		b.department_Name as department_Name
+    		*
     	from
-			tb_class a left join tb_department b  on a.department_id =b.id
+			tb_class a left join tb_department b  on a.departmentId =b.id
     	<where>
-  			<if test="param.departmentId != null ">and a.department_id = #{param.departmentId}</if>
-  			<if test="param.className != null and param.className != ''">and a.class_name LIKE CONCAT('%',#{param.className},'%')</if>
+  			<if test="param.departmentId != null ">AND a.department_id =# {param.department_id}</if>
+  			<if test="param.className != null and param.className != ''">AND a.class_name LIKE CONCAT('%',#{param.className+},'%')</if>
 		</where>
-		ORDER BY department_id
+		ORDER BY ID DESC
 	</select>
 
     <select id="getOne" resultType="com.student.work.Class.model.IClassDO" parameterType="com.student.work.Class.model.IClassDO">
@@ -33,7 +30,7 @@
 		from
 			tb_class
 		<where>
-			<if test="param.className != null and param.className != ''">and class_name = #{param.className}</if>
+			<if test="param.className != null and param.className != ''">class_name =# {param.className}</if>
 		</where>
 
 	</select>

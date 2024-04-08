@@ -70,7 +70,23 @@ public class UserController extends CheckUserController {
 		UserDO userDo = userService.selectOne(userDto);
 		return ResultGenerator.genOkResult(userDo);
 	}
-
+	/**
+	 * @Title: deleteBatchIds
+	 * @Description: 批量删除
+	 * @param
+	 * @return
+	 */
+	@PostMapping(value = "/deleteBatchIds")
+	public Result deleteBatchIds(@RequestBody UserDTO userDto) {
+		if (userDto.getIds().size() < 1) {
+			return ResultGenerator.genFailedResult("id不能为空！");
+		}
+		int i = userService.deleteBatchIds(userDto.getIds());
+		if (i < 0) {
+			return ResultGenerator.genFailedResult("删除失败");
+		}
+		return ResultGenerator.genOkResult(i);
+	}
 	/**
 	 * @Title: insert
 	 * @Description: 新增记录
@@ -80,7 +96,7 @@ public class UserController extends CheckUserController {
 	public Result insert(@RequestBody @Validated UserDO userDo) {
 		Map<String,String> result = userService.insertUser(userDo);
 		if (Integer.parseInt(result.get("resultCount")) > 0) {
-			return ResultGenerator.genOkResult("添加用户成功",result.get("resultCount"));
+			return ResultGenerator.genOkResult("添加成功");
 		}
 		return ResultGenerator.genFailedResult(result.get("resultMsg"));
 	}
@@ -102,21 +118,5 @@ public class UserController extends CheckUserController {
 	}
 
 
-	/**
-	 * @Title: deleteBatchIds
-	 * @Description: 批量删除
-	 * @param
-	 * @return
-	 */
-	@PostMapping(value = "/deleteBatchIds")
-	public Result deleteBatchIds(@RequestBody UserDTO userDto) {
-		if (userDto.getIds().size() < 1) {
-			return ResultGenerator.genFailedResult("id不能为空！");
-		}
-		int i = userService.deleteBatchIds(userDto.getIds());
-		if (i < 0) {
-			return ResultGenerator.genFailedResult("删除失败");
-		}
-		return ResultGenerator.genOkResult(i);
-	}
+
 }

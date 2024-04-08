@@ -141,8 +141,8 @@ public class LoginController extends CheckUserController {
 			clientIp = this.getRequest().getRemoteAddr();
 		}
 		log.info("访问登录接口Ip是：{}",clientIp);
-		if (clientIp.equals("127.0.0.1, 0:0:0:0:0:0:0:1")) {
-			clientIp = "127.0.0.1";
+		if (clientIp.equals("127.0.0.1, 26.74.79.249")) {
+			clientIp = "26.74.79.249";
 		}
 		List<String> list = Arrays.asList(whiteIpList.split(","));
 		Set<String> whiteIpSet = new HashSet<>(list);

@@ -5,9 +5,11 @@ import com.student.core.RestConstant;
 import com.student.core.Result;
 import com.student.core.ResultGenerator;
 import com.student.shiro.controller.CheckUserController;
+import com.student.shiro.controller.LoginController;
 import com.student.work.Class.model.IClassDO;
 import com.student.work.Class.model.IClassDTO;
 import com.student.work.Class.service.IClassService;
+import com.student.work.user.model.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,30 +37,30 @@ public class IClassController extends CheckUserController {
     private IClassService iClassService;
 
     /**
-     * @Title: getClassPage
+     * @Title: selectPage
      * @Description: 分页查询
      * @param iClassDTO
      * @return
      */
     @PostMapping(value = "/getClassPage")
     public Result getClassPage(@RequestBody IClassDTO iClassDTO) throws Exception {
-        Page<IClassDTO> page = new Page<>(iClassDTO.getPageNo(),iClassDTO.getPageSize());
+        Page<UserDTO> page = new Page<>(iClassDTO.getPageNo(),iClassDTO.getPageSize());
         Page<IClassDO> result = iClassService.selectPage(page, iClassDTO);
         return ResultGenerator.genOkResult(result);
     }
 
 
     /**
-     * @Title: addClass
-     * @Description: 添加班级
+     * @Title: selectPage
+     * @Description: 分页查询
      * @param iClassDO
      * @return
      */
-    @PostMapping(value = "/addClass")
-    public Result addClass(@RequestBody @Validated  IClassDO iClassDO) throws Exception {
+    @PostMapping(value = "/add")
+    public Result getClassPage(@RequestBody @Validated  IClassDO iClassDO) throws Exception {
         Map<String,String> result = iClassService.addClass(iClassDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
-            return ResultGenerator.genOkResult("添加成功",1);
+            return ResultGenerator.genOkResult("添加成功");
         }
         return ResultGenerator.genFailedResult(result.get("resultMsg"));
     }
@@ -75,7 +77,7 @@ public class IClassController extends CheckUserController {
         }
         Map<String,String> result = iClassService.update(iClassDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
-            return ResultGenerator.genOkResult("修改成功",1);
+            return ResultGenerator.genOkResult("修改成功");
         }
         return ResultGenerator.genFailedResult(result.get("resultMsg"));
     }
@@ -95,7 +97,7 @@ public class IClassController extends CheckUserController {
         if (i < 0) {
             return ResultGenerator.genFailedResult("删除失败");
         }
-        return ResultGenerator.genOkResult("删除成功",i);
+        return ResultGenerator.genOkResult(i);
     }
 
 }

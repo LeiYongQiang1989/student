@@ -6,7 +6,6 @@ import com.student.work.grade.model.GradeDTO;
 import com.student.work.grade.model.GradeVO;
 import com.student.work.grade.model.StatisticVO;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +26,4 @@ public interface GradeService {
     int deleteBatchIds(List<Integer> ids);
 
     StatisticVO getStatistics(GradeDTO gradeDTO);
-
-    void export( HttpServletResponse response,GradeDTO gradeDTO) throws Exception;
 }

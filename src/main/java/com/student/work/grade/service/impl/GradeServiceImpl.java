@@ -1,18 +1,15 @@
 package com.student.work.grade.service.impl;
 
-import cn.hutool.core.date.DateTime;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.student.utils.ExportUtils;
 import com.student.work.grade.mapper.GradeMapper;
-import com.student.work.grade.model.*;
+import com.student.work.grade.model.GradeDO;
+import com.student.work.grade.model.GradeDTO;
+import com.student.work.grade.model.GradeVO;
+import com.student.work.grade.model.StatisticVO;
 import com.student.work.grade.service.GradeService;
-import com.student.work.user.model.UserDO;
-import com.student.work.user.model.UserDTO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -39,15 +36,6 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public Map<String, String> addGrade(GradeDO gradeDO) {
         Map<String, String> resMap = new HashMap<>(2);
-        GradeDTO gradeDTO = new GradeDTO();
-        gradeDTO.setStudentId(gradeDO.getStudentId());
-        gradeDTO.setSubjectId(gradeDO.getSubjectId());
-        GradeDO grade = gradeMapper.getOne(gradeDTO);
-        if ( grade != null ) {
-            resMap.put("resultCount","0");
-            resMap.put("resultMsg","该学生此科目成绩已存在");
-            return resMap;
-        }
         int result = gradeMapper.insert(gradeDO);
         resMap.put("resultCount",String.valueOf(result));
         if (result > 0) {
@@ -60,8 +48,7 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public Map<String, String> update(GradeDO gradeDO) {
-        Map<String, String> resMap = new HashMap<>(2);
-        gradeDO.setUpdateTime(new DateTime());
+        Map<String, String> resMap = new HashMap<>();
         int result = gradeMapper.updateById(gradeDO);
         resMap.put("resultCount",String.valueOf(result));
         if (result > 0) {
@@ -111,22 +98,6 @@ public class GradeServiceImpl implements GradeService {
         statisticVO.setFailureRate(getPercentage(totalCount,failureCount));
 
         return statisticVO;
-
-    }
-
-    @Override
-    public void export( HttpServletResponse response,GradeDTO gradeDTO) throws Exception {
-        List<GradeEx> list = gradeMapper.getList(gradeDTO);
-        Map<String,String> map = new HashMap<>();
-        map.put("createName","创建人");
-        map.put("className","班级");
-        map.put("studentName","学生");
-        map.put("subjectName","课程");
-        map.put("gradeNumber","成绩");
-        map.put("departmentName","院系");
-        map.put("createTime","时间");
-        map.put("updateTime","更新时间");
-        ExportUtils.exportExcel("学生成绩表.xlsx", JSONObject.toJSONString(list), GradeEx.class, response);
 
     }
 
