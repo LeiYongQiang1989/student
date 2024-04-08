@@ -19,36 +19,38 @@
 
 
 
-	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.student.work.user.model.UserDO">
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.student.work.user.model.UserDTO">
 		select
     		*
     	from
 		 tb_user
     	<where>
-  			<if test="param.userNo != null and param.userNo != ''">AND user_no LIKE CONCAT('%',#{param.userNo},'%')</if>
-  			<if test="param.realName != null and param.realName != ''">AND real_name LIKE CONCAT('%',#{param.realName},'%')</if>
-			<if test="param.phone != null and param.phone != ''">AND phone LIKE CONCAT('%',#{param.phone},'%')</if>
-  			<if test="param.sex != null and param.sex != ''">AND sex =# {param.sex}</if>
-  			<if test="param.roleCode != null and param.roleCode != ''">AND role_code =# {param.roleCode}</if>
-			<if test="param.status != null and param.status != ''">AND status =# {param.status}</if>
-			<if test="param.delFlag != null and param.delFlag != ''">AND del_flag =# {param.delFlag}</if>
+  			<if test="param.userNo != null and param.userNo != ''">and user_no LIKE CONCAT('%',#{param.userNo},'%')</if>
+  			<if test="param.realName != null and param.realName != ''">and real_name LIKE CONCAT('%',#{param.realName},'%')</if>
+			<if test="param.phone != null and param.phone != ''">and phone LIKE CONCAT('%',#{param.phone},'%')</if>
+  			<if test="param.sex != null and param.sex != ''">and sex =# {param.sex}</if>
+  			<if test="param.roleCode != null and param.roleCode != ''">and role_code =# {param.roleCode}</if>
+			<if test="param.status != null and param.status != ''">and status =# {param.status}</if>
+			<if test="param.delFlag != null and param.delFlag != ''">and del_flag =# {param.delFlag}</if>
+			<if test="param.classId != null ">and class_id =# {param.classId}</if>
+			<if test="param.departmentId != null ">and department_id =# {param.departmentId}</if>
 		</where>
-		ORDER BY ID DESC
+		ORDER BY id DESC
 	</select>
 	
 
 	
 	<select id="selectOne" resultType="com.student.work.user.model.UserDO" parameterType="com.student.work.user.model.UserDO">
-		SELECT * FROM tb_user
+		select * from tb_user
 		<where>
 			<if test="param.id != null ">AND id =# {param.id}</if>
-			<if test="param.userNo != null and param.userNo != ''">AND user_no=# {param.userNo}</if>
-			<if test="param.passWord != null and param.passWord != ''">AND pass_word =# {param.passWord}</if>
-			<if test="param.realName != null and param.realName != ''">AND real_name =# {param.realName}</if>
-			<if test="param.phone != null and param.phone != ''">AND phone =# {param.phone}</if>
-			<if test="param.roleCode != null and param.roleCode != ''">AND role_code =# {param.roleCode}</if>
-			<if test="param.status != null and param.status != ''">AND status =# {param.status}</if>
-			<if test="param.delFlag != null and param.delFlag != ''">AND del_flag =# {param.delFlag}</if>
+			<if test="param.userNo != null and param.userNo != ''">and user_no = #{param.userNo}</if>
+			<if test="param.passWord != null and param.passWord != ''">and pass_word = #{param.passWord}</if>
+			<if test="param.realName != null and param.realName != ''">and real_name = #{param.realName}</if>
+			<if test="param.phone != null and param.phone != ''">and phone = #{param.phone}</if>
+			<if test="param.roleCode != null and param.roleCode != ''">and role_code = #{param.roleCode}</if>
+			<if test="param.status != null and param.status != ''">and status = #{param.status}</if>
+			<if test="param.delFlag != null and param.delFlag != ''">AND del_flag = #{param.delFlag}</if>
 		</where>
 	</select>
 

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace=" com.student.work.department.mapper.DepartmentMapper">
-<!--    <select id="selectUserDeparts" resultType="com.ylkj.cloud.upms.user.model.DepartDO"-->
-<!--            parameterType="java.lang.String">-->
-<!--        SELECT-->
-<!--            *-->
-<!--        FROM-->
-<!--            T_BASE_DEPART-->
-<!--        WHERE ORG_CODE = #{orgCode}-->
-<!--    </select>-->
-	
+<mapper namespace="com.student.work.department.mapper.DepartmentMapper">
+
+
+    <select id="selectList" resultType="com.student.work.department.model.DepartmentDO">
+        select * from tb_department
+    </select>
 </mapper>

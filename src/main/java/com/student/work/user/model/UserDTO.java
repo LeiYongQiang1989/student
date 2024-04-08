@@ -50,6 +50,12 @@ public class UserDTO extends BaseDTO {
     //状态(1：正常  2：冻结
     private Integer status;
 
+
+    /**
+     * 删除状态（1：正常，-1：已删除）
+     */
+    private String delFlag;
+
     //更新时间
     private Date updateTime;
 
@@ -64,5 +70,7 @@ public class UserDTO extends BaseDTO {
      */
     private String decryptKey;
 
+    private Integer departmentId;
 
+    private Integer classId;
 }

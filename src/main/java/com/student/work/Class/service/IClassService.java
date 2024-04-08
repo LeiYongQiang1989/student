@@ -3,7 +3,6 @@ package com.student.work.Class.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.student.work.Class.model.IClassDO;
 import com.student.work.Class.model.IClassDTO;
-import com.student.work.user.model.UserDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ public interface IClassService {
      * @param iClassDTO
      * @return_type: Page<UserVO>
      */
-    Page<IClassDO> selectPage(Page<UserDTO> page, IClassDTO iClassDTO);
+    Page<IClassDO> selectPage(Page<IClassDTO> page, IClassDTO iClassDTO);
 
 
     /**

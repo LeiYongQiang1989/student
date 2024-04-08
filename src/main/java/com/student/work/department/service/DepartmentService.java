@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface DepartmentService {
 
-    List<IClassDO> getList();
+    List<DepartmentDO> getList();
 
     Map<String, String> add(DepartmentDO departmentDO);
 

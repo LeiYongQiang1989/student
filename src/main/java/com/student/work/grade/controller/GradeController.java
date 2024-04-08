@@ -13,10 +13,8 @@ import com.student.work.grade.service.GradeService;
 import com.student.work.user.model.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.util.Map;
 
@@ -37,18 +35,20 @@ public class GradeController extends CheckUserController {
     private GradeService gradeService;
 
     /**
+     *
+     * 角色名称:1-管理员，2-教师，3-学生
      * @Title: getPage
      * @Description: 分页查询
      * @param gradeDTO
      * @return
      */
-    @PostMapping(value = "/getPage")
-    public Result getPage(@RequestBody GradeDTO gradeDTO)  {
+    @PostMapping(value = "/getGradePage")
+    public Result getGradePage(@RequestBody GradeDTO gradeDTO)  {
         UserDO  userDO = getUser();
         Page<GradeVO> page = new Page<>(gradeDTO.getPageNo(),gradeDTO.getPageSize());
-        if (userDO.getRoleCode() == "3") {
+        if ("3".equals(userDO.getRoleCode())) {
             gradeDTO.setStudentId(userDO.getId());
-        } else if (userDO.getRoleCode() == "2") {
+        } else if ("2".equals(userDO.getRoleCode())) {
             gradeDTO.setCreateId(userDO.getId());
         }
         Page<GradeVO> result = gradeService.getPage(page, gradeDTO);
@@ -62,16 +62,16 @@ public class GradeController extends CheckUserController {
      * @param gradeDO
      * @return
      */
-    @PostMapping(value = "/add")
-    public Result add(@RequestBody @Validated GradeDO gradeDO) throws Exception {
+    @PostMapping(value = "/addGrade")
+    public Result addGrade(@RequestBody @Validated GradeDO gradeDO) throws Exception {
         // 角色为3的学生无添加、修改、删除权限
-        UserDO  userDO = getUser();
-        if (userDO.getRoleCode() == "3") {
-            return ResultGenerator.genFailedResult("该用户无权限");
-        }
+//        UserDO  userDO = getUser();
+//        if ("3".equals(userDO.getRoleCode())) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         Map<String,String> result = gradeService.addGrade(gradeDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
-            return ResultGenerator.genOkResult("添加成功");
+            return ResultGenerator.genOkResult(result.get("resultMsg"));
         }
         return ResultGenerator.genFailedResult(result.get("resultMsg"));
     }
@@ -81,13 +81,13 @@ public class GradeController extends CheckUserController {
      * @Description: 修改记录
      * @return
      */
-    @PostMapping("/updateById")
+    @PostMapping("/updateGradeById")
     public Result update(@RequestBody  GradeDO gradeDO) {
-        // 角色为3的学生无添加、修改、删除权限
-        UserDO  userDO = getUser();
-        if (userDO.getRoleCode() == "3") {
-            return ResultGenerator.genFailedResult("该用户无权限");
-        }
+//        // 角色为3的学生无添加、修改、删除权限
+//        UserDO  userDO = getUser();
+//        if ("3".equals(userDO.getRoleCode())) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         if (gradeDO.getId() == null) {
             return ResultGenerator.genFailedResult("主键id不能为空！");
         }
@@ -104,13 +104,13 @@ public class GradeController extends CheckUserController {
      * @param
      * @return
      */
-    @PostMapping(value = "/deleteBatchIds")
+    @PostMapping(value = "/deleteGradeBatchIds")
     public Result deleteBatchIds(@RequestBody GradeDTO gradeDTO) {
-        // 角色为3的学生无添加、修改、删除权限
-        UserDO  userDO = getUser();
-        if (userDO.getRoleCode() == "3") {
-            return ResultGenerator.genFailedResult("该用户无权限");
-        }
+//        // 角色为3的学生无添加、修改、删除权限
+//        UserDO  userDO = getUser();
+//        if ("3".equals(userDO.getRoleCode())) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         if (gradeDTO.getIds().size() == 0) {
             return ResultGenerator.genFailedResult("id不能为空！");
         }
@@ -118,7 +118,7 @@ public class GradeController extends CheckUserController {
         if (i < 0) {
             return ResultGenerator.genFailedResult("删除失败");
         }
-        return ResultGenerator.genOkResult(i);
+        return ResultGenerator.genOkResult("删除成功",i);
     }
 
 
@@ -135,17 +135,52 @@ public class GradeController extends CheckUserController {
      */
     @PostMapping(value = "/getStatistics")
     public Result getStatistics(@RequestBody GradeDTO gradeDTO)  {
-        // 角色为3的学生无添加、修改、删除权限
-        UserDO  userDO = getUser();
-        if (userDO.getRoleCode() == "3") {
-            return ResultGenerator.genFailedResult("该用户无权限");
-        }
+//        // 角色为3的学生无添加、修改、删除权限
+//        UserDO  userDO = getUser();
+//        if ("3".equals(userDO.getRoleCode())) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         if (gradeDTO.getSubjectId() == null ) {
             return ResultGenerator.genFailedResult("统计时学科id不能为空！");
         }
         StatisticVO result = gradeService.getStatistics(gradeDTO);
         return ResultGenerator.genOkResult(result);
     }
+
+
+    /**
+     * @Title: deleteBatchIds
+     * @Description: 批量删除
+     * @param
+     * @return
+     */
+    @GetMapping(value = "/export")
+    public void export( @RequestParam(value = "classId", required = false) Integer classId,
+                          @RequestParam(value = "departmentId", required = false) Integer departmentId,
+                          @RequestParam(value = "subjectId", required = false) Integer subjectId
+                                                                ) throws Exception {
+//        // 角色为3的学生无添加、修改、删除权限
+//        UserDO  userDO = getUser();
+//        if ("3".equals(userDO.getRoleCode())) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
+        GradeDTO gradeDTO = new GradeDTO();
+        if(subjectId != null) {
+            gradeDTO.setSubjectId(subjectId);
+        }
+        if(classId != null) {
+            gradeDTO.setClassId(classId);
+        }
+        if(departmentId != null) {
+            gradeDTO.setDepartmentId(departmentId);
+        }
+
+        gradeService.export(getResponse(),gradeDTO);
+    }
+
+
+
+
 
 
 }

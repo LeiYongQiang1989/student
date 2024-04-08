@@ -10,7 +10,9 @@
  */
 package com.student.work.department.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,16 +37,15 @@ public class DepartmentDO {
     /**
      * 主键id
      */
-    @TableField("id")
+    @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
-
 
     /**
      * 院系名称
      */
-    @TableField("department_Name")
+    @TableField("department_name")
     @NotNull(message = "院系名称不能为空")
-    private Integer departmentName;
+    private String departmentName;
 
 
 

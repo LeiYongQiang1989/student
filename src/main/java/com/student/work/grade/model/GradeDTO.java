@@ -40,6 +40,12 @@ public class GradeDTO extends BaseDTO {
 
 
     /**
+     * 院系id
+     */
+    private Integer departmentId;
+
+
+    /**
      * 学生id
      */
     private Integer studentId;

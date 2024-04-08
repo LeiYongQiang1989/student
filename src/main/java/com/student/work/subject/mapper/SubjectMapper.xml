@@ -32,7 +32,7 @@
 		<where>
 			<if test="param.subjectName != null and param.subjectName != ''">subject_name LIKE CONCAT('%',#{param.subjectName},'%')</if>
 		</where>
-		ORDER BY ID DESC
+		ORDER BY id DESC
 
 	</select>
 	
@@ -42,7 +42,7 @@
 		from
 			tb_subject
 		<where>
-			<if test="param.subjectName != null and param.subjectName != ''">subject_name =# {param.subjectName}</if>
+			<if test="param.subjectName != null and param.subjectName != ''">subject_name =#{param.subjectName}</if>
 		</where>
 	</select>
 

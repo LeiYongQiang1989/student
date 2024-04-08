@@ -38,65 +38,69 @@ public class Interceptor extends HandlerInterceptorAdapter {
         if ((request.getRequestURI().contains("/login")) || (request.getRequestURI().contains("/secretKey"))) {
             return true;
         }
-//        if ((request.getRequestURI().contains("/login")) || (request.getRequestURI().contains("/secretKey"))
-//                || (request.getRequestURI().contains("/getPassWord"))) {
-//            return true;
-//        }
-        String clientIp = "";
-        boolean contains = isInWhitelist(request,clientIp);
-        if (!contains) {
-            returnJson(response, "{\n" + "\"code\": 4000,\n" + "\"success\": false,\n" +
-                    "\"resultCode\": \"BASE_4000\",\n" + "\"msg\": \"暂无访问权限！\"\n" + "}");
-            return false;
-        }
 
-        try {
-            String token = request.getHeader(RestConstant.X_ACCESS_TOKEN);
-            if (StringUtils.isBlank(token)) {
-                returnJson(response, "{\n" + "\"code\": 4001,\n" + "\"success\": false,\n" +
-                        "\"resultCode\": \"BASE_4001\",\n" + "\"msg\": \"请求头中未携带token!！\"\n" + "}");
-                return false;
-            }
-            //判断是否登录
-            String operatorPersonnel = getOperatorPersonnel(request,token);
-            if (StringUtils.isNotBlank(operatorPersonnel)) {
-                String method = request.getMethod();
-                String requestParam = null;
-                //若是请求是POST获取body字符串，不然GET的话用request.getQueryString()获取参数值
-                if("POST".equals(method)){
-                    if (request instanceof HttpServletRequestFilter.RequestWrapper ) {
-                        HttpServletRequestFilter.RequestWrapper repeatedRequest = (HttpServletRequestFilter.RequestWrapper) request;
-                        requestParam = HttpContextUtils.getBodyString(repeatedRequest);
-                        //客户端总体请求信息
-                        StringBuilder clientInfo = new StringBuilder();
-                        clientInfo.append("客户端信息:[").append("ip:").append(clientIp)
-                                .append(", 请求方式:").append(method)
-                                .append(", URI:").append(request.getRequestURI())
-                                .append(", 操作人是:").append(operatorPersonnel)
-                                .append(", 请求参数值:").append(requestParam.replaceAll("\\s*", ""))
-                                .append("]");
-                        log.info(clientInfo.toString());
-                    }
-                }else if ("GET".equals(method)){
-                    //客户端总体请求信息
-                    StringBuilder clientInfo = new StringBuilder();
-                    clientInfo.append("客户端信息:[").append("ip:").append(clientIp)
-                            .append(", 请求方式:").append(method)
-                            .append(", URI:").append(request.getRequestURI())
-                            .append(", 操作人是:").append(operatorPersonnel)
-                            .append("]");
-                    log.info(clientInfo.toString());
-                }
-                return true;
-            }
-            returnJson(response, "{\n" + "\"code\": 4002,\n" + "\"success\": false,\n" +
-                    "\"resultCode\": \"BASE_4002\",\n" + "\"msg\": \"无效token！\"\n" + "}");
-            //如果设置为false时，被请求时，拦截器执行到此处将不会继续操作;如果设置为true时，请求将会继续执行后面的操作
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+
+////        if ((request.getRequestURI().contains("/login")) || (request.getRequestURI().contains("/secretKey"))
+////                || (request.getRequestURI().contains("/getPassWord"))) {
+////            return true;
+////        }
+//        String clientIp = "";
+//        boolean contains = isInWhitelist(request,clientIp);
+//        if (!contains) {
+//            returnJson(response, "{\n" + "\"code\": 4000,\n" + "\"success\": false,\n" +
+//                    "\"resultCode\": \"BASE_4000\",\n" + "\"msg\": \"暂无访问权限！\"\n" + "}");
+//            return false;
+//        }
+//
+//        try {
+//            String token = request.getHeader(RestConstant.X_ACCESS_TOKEN);
+//            if (StringUtils.isBlank(token)) {
+//                returnJson(response, "{\n" + "\"code\": 4001,\n" + "\"success\": false,\n" +
+//                        "\"resultCode\": \"BASE_4001\",\n" + "\"msg\": \"请求头中未携带token!！\"\n" + "}");
+//                return false;
+//            }
+//            //判断是否登录
+//            String operatorPersonnel = getOperatorPersonnel(request,token);
+//            if (StringUtils.isNotBlank(operatorPersonnel)) {
+//                String method = request.getMethod();
+//                String requestParam = null;
+//                //若是请求是POST获取body字符串，不然GET的话用request.getQueryString()获取参数值
+//                if("POST".equals(method)){
+//                    if (request instanceof HttpServletRequestFilter.RequestWrapper ) {
+//                        HttpServletRequestFilter.RequestWrapper repeatedRequest = (HttpServletRequestFilter.RequestWrapper) request;
+//                        requestParam = HttpContextUtils.getBodyString(repeatedRequest);
+//                        //客户端总体请求信息
+//                        StringBuilder clientInfo = new StringBuilder();
+//                        clientInfo.append("客户端信息:[").append("ip:").append(clientIp)
+//                                .append(", 请求方式:").append(method)
+//                                .append(", URI:").append(request.getRequestURI())
+//                                .append(", 操作人是:").append(operatorPersonnel)
+//                                .append(", 请求参数值:").append(requestParam.replaceAll("\\s*", ""))
+//                                .append("]");
+//                        log.info(clientInfo.toString());
+//                    }
+//                }else if ("GET".equals(method)){
+//                    //客户端总体请求信息
+//                    StringBuilder clientInfo = new StringBuilder();
+//                    clientInfo.append("客户端信息:[").append("ip:").append(clientIp)
+//                            .append(", 请求方式:").append(method)
+//                            .append(", URI:").append(request.getRequestURI())
+//                            .append(", 操作人是:").append(operatorPersonnel)
+//                            .append("]");
+//                    log.info(clientInfo.toString());
+//                }
+//                return true;
+//            }
+//            returnJson(response, "{\n" + "\"code\": 4002,\n" + "\"success\": false,\n" +
+//                    "\"resultCode\": \"BASE_4002\",\n" + "\"msg\": \"无效token！\"\n" + "}");
+//            //如果设置为false时，被请求时，拦截器执行到此处将不会继续操作;如果设置为true时，请求将会继续执行后面的操作
+//            return false;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+
+        return true;
     }
 
     private boolean isInWhitelist(HttpServletRequest request , String clientIp) {

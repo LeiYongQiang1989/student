@@ -32,6 +32,7 @@ public class IClassDTO extends BaseDTO {
     private String className;
 
 
+
     private List<Integer> ids;
 
 

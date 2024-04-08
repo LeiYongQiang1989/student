@@ -7,6 +7,7 @@ import com.student.shiro.controller.CheckUserController;
 import com.student.work.Class.model.IClassDO;
 import com.student.work.department.model.DepartmentDO;
 import com.student.work.department.service.DepartmentService;
+import com.student.work.user.model.UserDO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class DepartmentController extends CheckUserController {
      */
     @GetMapping(value = "/getList")
     public Result getList() throws Exception {
-       List<IClassDO> result = departmentService.getList();
+       List<DepartmentDO> result = departmentService.getList();
         return ResultGenerator.genOkResult(result);
     }
 
@@ -50,6 +51,11 @@ public class DepartmentController extends CheckUserController {
      */
     @PostMapping(value = "/add")
     public Result add(@RequestBody @Validated  DepartmentDO departmentDO) throws Exception {
+        // 只有角色为1的系统管理员才有添加、修改、删除权限
+//        UserDO userDO = getUser();
+//        if (!"1".equals(userDO.getRoleCode()) ) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         Map<String,String> result = departmentService.add(departmentDO);
         if (Integer.parseInt(result.get("resultCount")) > 0) {
             return ResultGenerator.genOkResult("添加成功");
@@ -64,6 +70,11 @@ public class DepartmentController extends CheckUserController {
      */
     @PostMapping("/updateById")
     public Result update(@RequestBody  DepartmentDO departmentDO) {
+//        // 只有角色为1的系统管理员才有添加、修改、删除权限
+//        UserDO userDO = getUser();
+//        if (!"1".equals(userDO.getRoleCode()) ) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         if (departmentDO.getId() == null) {
             return ResultGenerator.genFailedResult("主键id不能为空！");
         }
@@ -82,6 +93,11 @@ public class DepartmentController extends CheckUserController {
      */
     @PostMapping(value = "/deleteById")
     public Result deleteById(@RequestBody DepartmentDO departmentDO) {
+//        // 只有角色为1的系统管理员才有添加、修改、删除权限
+//        UserDO userDO = getUser();
+//        if (!"1".equals(userDO.getRoleCode()) ) {
+//            return ResultGenerator.genFailedResult("该用户无权限");
+//        }
         if (departmentDO.getId() == null) {
             return ResultGenerator.genFailedResult("id不能为空！");
         }
@@ -89,7 +105,7 @@ public class DepartmentController extends CheckUserController {
         if (i < 0) {
             return ResultGenerator.genFailedResult("删除失败");
         }
-        return ResultGenerator.genOkResult(i);
+        return ResultGenerator.genOkResult("删除成功",i);
     }
 
 }

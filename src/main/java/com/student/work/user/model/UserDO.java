@@ -89,7 +89,7 @@ public class UserDO extends BaseDO {
     private String roleCode;
 
     /**
-     * 院系
+     * 院系名称
      */
     @TableField("department")
     private String  department;

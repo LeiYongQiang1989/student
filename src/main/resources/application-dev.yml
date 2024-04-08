@@ -50,7 +50,7 @@ SMS2:
   PRK: 21d22fcf259f5cde
   pubKey: 0470d7ab4f66602f1b1
 SMS4:
-  LOGIN: f8d4fad5
+  LOGIN: f8d4fad5a60a79bf
 authority:
   whiteIpList: 127.0.0.0.1,0:0:0:0:0:0:0:1,
   loginUserToken: prod_login_

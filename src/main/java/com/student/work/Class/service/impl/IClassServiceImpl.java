@@ -9,7 +9,6 @@ import com.student.work.subject.model.SubjectDO;
 import com.student.work.user.model.UserDO;
 import com.student.work.user.model.UserDTO;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +28,8 @@ public class IClassServiceImpl implements IClassService {
     private IClassMapper iClassMapper;
 
     @Override
-    public Page<IClassDO> selectPage(Page<UserDTO> page, IClassDTO iClassDTO) {
-        return iClassMapper.selectPage(page,iClassDTO);
+    public Page<IClassDO> selectPage(Page<IClassDTO> page, IClassDTO iClassDTO) {
+        return iClassMapper.getPage(page,iClassDTO);
     }
 
     @Override
